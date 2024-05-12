@@ -5,8 +5,8 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
-static int borderpx = 2;
+static char *font = "JetBrainsMono-Regular:size=8";
+static int borderpx = 4;
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -19,16 +19,17 @@ static int borderpx = 2;
 static char *shell = "/bin/sh";
 char *utmp = NULL;
 /* scroll program: to enable use a string like "scroll" */
-char *scroll = NULL;
+char *scroll = NULL;//"scroll";
 char *stty_args = "stty raw pass8 nl -echo -iexten -cstopb 38400";
 
 /* identification sequence returned in DA and DECID */
 char *vtiden = "\033[?6c";
 
 /* Kerning / character bounding-box multipliers */
-static float cwscale = 1.0;
-static float chscale = 1.0;
+static float cwscale = 0.9;
+static float chscale = 0.9;
 
+float alpha = 0.75;
 /*
  * word delimiter string
  *
@@ -53,8 +54,8 @@ int allowwindowops = 0;
  * near minlatency, but it waits longer for slow updates to avoid partial draw.
  * low minlatency will tear/flicker more, as it can "detect" idle too early.
  */
-static double minlatency = 2;
-static double maxlatency = 33;
+static double minlatency = 16;
+static double maxlatency = 32;
 
 /*
  * blinking timeout (set to 0 to disable blinking) for the terminal blinking
@@ -65,7 +66,7 @@ static unsigned int blinktimeout = 800;
 /*
  * thickness of underline and bar cursors
  */
-static unsigned int cursorthickness = 2;
+static unsigned int cursorthickness = 1;
 
 /*
  * bell volume. It must be a value between -100 and 100. Use 0 for disabling
@@ -96,32 +97,32 @@ unsigned int tabspaces = 8;
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
 	/* 8 normal colors */
-	"black",
-	"red3",
-	"green3",
-	"yellow3",
-	"blue2",
-	"magenta3",
-	"cyan3",
-	"gray90",
+	"#000000",
+	"#F00000",
+	"#00F000",
+	"#F0F000",
+	"#0000F0",
+	"#F000F0",
+	"#00F0F0",
+	"#606060",
 
 	/* 8 bright colors */
-	"gray50",
-	"red",
-	"green",
-	"yellow",
-	"#5c5cff",
-	"magenta",
-	"cyan",
-	"white",
+	"#000000",
+	"#FF0000",
+	"#00FF00",
+	"#FFFF00",
+	"#0000FF",
+	"#FF00FF",
+	"#00FFFF",
+	"#808080",
 
 	[255] = 0,
 
 	/* more colors can be added after 255 to use with DefaultXX */
-	"#cccccc",
-	"#555555",
-	"gray90", /* default foreground colour */
-	"black", /* default background colour */
+	"#00FFFF",
+	"#008080",
+	"#FFFFFF", /* default foreground colour */
+	"#101010", /* default background colour */
 };
 
 
@@ -141,7 +142,7 @@ static unsigned int defaultrcs = 257;
  * 6: Bar ("|")
  * 7: Snowman ("☃")
  */
-static unsigned int cursorshape = 2;
+static unsigned int cursorshape = 4;
 
 /*
  * Default columns and rows numbers
