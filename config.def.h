@@ -19,17 +19,18 @@ static int borderpx = 4;
 static char *shell = "/bin/sh";
 char *utmp = NULL;
 /* scroll program: to enable use a string like "scroll" */
-char *scroll = NULL;//"scroll";
+char *scroll = NULL;
 char *stty_args = "stty raw pass8 nl -echo -iexten -cstopb 38400";
 
 /* identification sequence returned in DA and DECID */
 char *vtiden = "\033[?6c";
 
 /* Kerning / character bounding-box multipliers */
-static float cwscale = 0.9;
-static float chscale = 0.9;
+static float cwscale = 1.0;
+static float chscale = 1.0;
 
 float alpha = 0.75;
+
 /*
  * word delimiter string
  *
@@ -54,7 +55,7 @@ int allowwindowops = 0;
  * near minlatency, but it waits longer for slow updates to avoid partial draw.
  * low minlatency will tear/flicker more, as it can "detect" idle too early.
  */
-static double minlatency = 16;
+static double minlatency = 2;
 static double maxlatency = 32;
 
 /*
