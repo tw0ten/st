@@ -142,8 +142,11 @@ static unsigned int defaultrcs = 257;
  * 4: Underline ("_")
  * 6: Bar ("|")
  * 7: Snowman ("☃")
+ * 8: Outline ("[]")
+ * 9: None
  */
-static unsigned int cursorshape = 2;
+static unsigned int cursorshape = 4;
+static unsigned int unfocusedcursorshape = 9;
 
 /*
  * Default columns and rows numbers

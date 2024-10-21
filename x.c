@@ -1576,8 +1576,27 @@ xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og)
 	}
 
 	/* draw the new one */
-	if (IS_SET(MODE_FOCUSED)) {
-		switch (win.cursor) {
+	switch (IS_SET(MODE_FOCUSED) ? win.cursor : unfocusedcursorshape) {
+		case 9: /* None */
+			break;
+		case 8: /* Outline */
+			XftDrawRect(xw.draw, &drawcol,
+					borderpx + cx * win.cw,
+					borderpx + cy * win.ch,
+					win.cw - 1, 1);
+			XftDrawRect(xw.draw, &drawcol,
+					borderpx + cx * win.cw,
+					borderpx + cy * win.ch,
+					1, win.ch - 1);
+			XftDrawRect(xw.draw, &drawcol,
+					borderpx + (cx + 1) * win.cw - 1,
+					borderpx + cy * win.ch,
+					1, win.ch - 1);
+			XftDrawRect(xw.draw, &drawcol,
+					borderpx + cx * win.cw,
+					borderpx + (cy + 1) * win.ch - 1,
+					win.cw, 1);
+			break;
 		case 7: /* st extension */
 			g.u = 0x2603; /* snowman (U+2603) */
 			/* FALLTHROUGH */
@@ -1590,8 +1609,7 @@ xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og)
 		case 4: /* Steady Underline */
 			XftDrawRect(xw.draw, &drawcol,
 					borderpx + cx * win.cw,
-					borderpx + (cy + 1) * win.ch - \
-						cursorthickness,
+					borderpx + (cy + 1) * win.ch - cursorthickness,
 					win.cw, cursorthickness);
 			break;
 		case 5: /* Blinking bar */
@@ -1601,24 +1619,6 @@ xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og)
 					borderpx + cy * win.ch,
 					cursorthickness, win.ch);
 			break;
-		}
-	} else {
-		XftDrawRect(xw.draw, &drawcol,
-				borderpx + cx * win.cw,
-				borderpx + cy * win.ch,
-				win.cw - 1, 1);
-		XftDrawRect(xw.draw, &drawcol,
-				borderpx + cx * win.cw,
-				borderpx + cy * win.ch,
-				1, win.ch - 1);
-		XftDrawRect(xw.draw, &drawcol,
-				borderpx + (cx + 1) * win.cw - 1,
-				borderpx + cy * win.ch,
-				1, win.ch - 1);
-		XftDrawRect(xw.draw, &drawcol,
-				borderpx + cx * win.cw,
-				borderpx + (cy + 1) * win.ch - 1,
-				win.cw, 1);
 	}
 }
 
@@ -1757,7 +1757,7 @@ xsetmode(int set, unsigned int flags)
 int
 xsetcursor(int cursor)
 {
-	if (!BETWEEN(cursor, 0, 7)) /* 7: st extension */
+	if (!BETWEEN(cursor, 0, 9)) /* 7: st extension */
 		return 1;
 	win.cursor = cursor;
 	return 0;
