@@ -1615,7 +1615,7 @@ csihandle(void)
 		tmoveto(term.c.x, term.c.y-csiescseq.arg[0]);
 		break;
 	case 'B': /* CUD -- Cursor <n> Down */
-	case 'e': /* VPR --Cursor <n> Down */
+	case 'e': /* VPR -- Cursor <n> Down */
 		DEFAULT(csiescseq.arg[0], 1);
 		tmoveto(term.c.x, term.c.y+csiescseq.arg[0]);
 		break;

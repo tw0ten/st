@@ -1576,7 +1576,7 @@ xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og)
 	}
 
 	/* draw the new one */
-	switch (IS_SET(MODE_FOCUSED) ? win.cursor : unfocusedcursorshape) {
+	switch (IS_SET(MODE_FOCUSED) ? win.cursor : cursorshape) {
 		case 9: /* None */
 			break;
 		case 8: /* Outline */
