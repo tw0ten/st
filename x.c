@@ -252,7 +252,6 @@ static char *opt_font  = NULL;
 static char *opt_io    = NULL;
 static char *opt_line  = NULL;
 static char *opt_name  = NULL;
-static char *opt_title = NULL;
 
 static uint buttons; /* bit field of pressed buttons */
 
@@ -1633,7 +1632,7 @@ void
 xseticontitle(char *p)
 {
 	XTextProperty prop;
-	DEFAULT(p, opt_title);
+	DEFAULT(p, title);
 
 	if (Xutf8TextListToTextProperty(xw.dpy, &p, 1, XUTF8StringStyle,
 	                                &prop) != Success)
@@ -1647,7 +1646,7 @@ void
 xsettitle(char *p)
 {
 	XTextProperty prop;
-	DEFAULT(p, opt_title);
+	DEFAULT(p, title);
 
 	if (Xutf8TextListToTextProperty(xw.dpy, &p, 1, XUTF8StringStyle,
 	                                &prop) != Success)
@@ -2087,7 +2086,7 @@ main(int argc, char *argv[])
 		break;
 	case 't':
 	case 'T':
-		opt_title = EARGF(usage());
+		title = EARGF(usage());
 		break;
 	case 'w':
 		opt_embed = EARGF(usage());
@@ -2103,8 +2102,8 @@ run:
 	if (argc > 0) /* eat all remaining arguments */
 		opt_cmd = argv;
 
-	if (!opt_title)
-		opt_title = (opt_line || !opt_cmd) ? "st" : opt_cmd[0];
+	if (!opt_line && opt_cmd)
+		title = opt_cmd[0];
 
 	setlocale(LC_CTYPE, "");
 	XSetLocaleModifiers("");
